@@ -65,14 +65,15 @@ public class Main {
         };
         texting(fixer, pointsArray);
 
-          /*      pointsArray = new int[][]{{0, 0}, {10, 0},
+         /*
+         pointsArray = new int[][]{{0, 0}, {10, 0},
                 {0, 0}, {10, 0}, {10, 10}, {0, 10}, {0, 0},
                 {10, 10}, {0, 10}, {0, 0}};
         texting(fixer, pointsArray);
-
         pointsArray = new int[][]{{0, 0}, {10, 0},
                 {10, 10}, {0, 10}, {0, 0}};
-        texting(fixer, pointsArray);*/
+        texting(fixer, pointsArray);
+        */
 
        /* if (!isValid) {
             Shape2D repairedShape = fixer.repair(shape);
@@ -83,13 +84,17 @@ public class Main {
 
     }
 
-    private static boolean texting(TheShapeFixer fixer, int[][] pointsArray) {
+    private static void texting(TheShapeFixer fixer, int[][] pointsArray) {
         boolean isValid;
         List<Point2D> points;
         Shape2D shape;
+
         points = TheShapeFixerUtils.convertToPoints(pointsArray);
         shape = new Shape2D(points);
         isValid = fixer.isValid(shape);
         System.out.println("Is Shape Valid: " + isValid);
+        if (!isValid) {
+            //
+        }
     }
 }
