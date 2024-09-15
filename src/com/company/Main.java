@@ -13,78 +13,67 @@ public class Main {
 
         TheShapeFixer fixer = new TheShapeFixer();
 
-        System.out.println("простого квадрата без внутренних пересечений.");
-        int[][] pointsArray = new int[][]{{0, 0}, {10, 0}, {10, 10}, {0, 10}, {0, 0}}; // Замыкающая точка
-        texting(fixer, pointsArray);
-
-        System.out.println("Пример Невалидной фигуры (квадрат внутри квадрата):");
-        pointsArray = new int[][]{
-                {0, 0},  // Внешний квадрат
+        System.out.println("Example of a simple square without internal intersections.");
+        int[][] pointsArray = new int[][]{
+                {0, 0},
                 {10, 0},
                 {10, 10},
                 {0, 10},
-                {0, 0},  // Замыкание внешнего квадрата
-                {3, 3},  // Внутренний квадрат
+                {0, 0}
+        }; // Closing point
+        testing(fixer, pointsArray);
+
+        System.out.println("Example of an Invalid figure (a square inside a square)");
+        pointsArray = new int[][]{
+                {0, 0},  // Outer square
+                {10, 0},
+                {10, 10},
+                {0, 10},
+                {0, 0},  // Closing the outer square
+                {3, 3},  // Inner square
                 {7, 3},
                 {7, 7},
                 {3, 7},
-                {3, 3}   // Замыкание внутреннего квадрата
+                {3, 3}   // Closing the inner square
         };
-        texting(fixer, pointsArray);
+        testing(fixer, pointsArray);
 
-        System.out.println("Пример невалидной фигуры (повторяющиеся точки):");
+        System.out.println("Example of an invalid figure (repeated dots)");
         pointsArray = new int[][]{
                 {0, 0},
                 {10, 0},
-                {0, 0},  // Повторяющаяся точка
+                {0, 0},  // Repeating point
                 {10, 0},
                 {10, 10},
                 {0, 10},
-                {0, 0}  // Замыкающая точка
+                {0, 0}  // Closing point
         };
-        texting(fixer, pointsArray);
+        testing(fixer, pointsArray);
 
-        System.out.println("Пример невалидной фигуры (пересекающиеся рёбра):");
+        System.out.println("Example of an invalid figure (intersecting edges)");
         pointsArray = new int[][]{
                 {0, 0},
                 {10, 0},
                 {0, 10},
                 {10, 10},
-                {0, 0} // Замыкающая точка
+                {0, 0} // Closing point
         };
-        texting(fixer, pointsArray);
+        testing(fixer, pointsArray);
 
-        System.out.println("Пример валидной фигуры (выпуклый многоугольник):");
+        System.out.println("Example of a valid figure (convex polygon)");
         pointsArray = new int[][]{
                 {0, 0},
                 {5, 0},
                 {10, 5},
                 {5, 10},
                 {0, 5},
-                {0, 0} // Замыкающая точка
+                {0, 0} // Closing point
         };
-        texting(fixer, pointsArray);
-
-         /*
-         pointsArray = new int[][]{{0, 0}, {10, 0},
-                {0, 0}, {10, 0}, {10, 10}, {0, 10}, {0, 0},
-                {10, 10}, {0, 10}, {0, 0}};
-        texting(fixer, pointsArray);
-        pointsArray = new int[][]{{0, 0}, {10, 0},
-                {10, 10}, {0, 10}, {0, 0}};
-        texting(fixer, pointsArray);
-        */
-
-       /* if (!isValid) {
-            Shape2D repairedShape = fixer.repair(shape);
-            isValid = fixer.isValid(repairedShape);
-            System.out.println("Is Shape Valid: " + isValid);
-            System.out.println("Shape has been repair.");
-        }*/
+        testing(fixer, pointsArray);
 
     }
 
-    private static void texting(TheShapeFixer fixer, int[][] pointsArray) {
+    private static void testing(TheShapeFixer fixer, int[][] pointsArray) {
         boolean isValid;
         List<Point2D> points;
         Shape2D shape;
@@ -94,7 +83,9 @@ public class Main {
         isValid = fixer.isValid(shape);
         System.out.println("Is Shape Valid: " + isValid);
         if (!isValid) {
-            //
+            Shape2D newShape = fixer.repair(shape);
+            isValid = fixer.isValid(newShape);
+            System.out.println("Is Shape Valid after repair: " + isValid);
         }
     }
 }
