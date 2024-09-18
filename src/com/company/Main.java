@@ -12,18 +12,28 @@ public class Main {
     public static void main(String[] args) {
 
         TheShapeFixer fixer = new TheShapeFixer();
+        int[][] pointsArray = new int[][]{{0, 0}};
 
-        System.out.println("Example of a simple square without internal intersections.");
-        int[][] pointsArray = new int[][]{
+        System.out.println("1. Example of a simple square without internal intersections.");
+        pointsArray = new int[][]{
+                {0, 6}, {0, 0},
+                {1, 1}, {7, 1},
+                {0, 2}, {4, 2}, {4, 10}, {0, 10}, {0, 2},
+                {4, 2}, {8, 2}, {8, 6}, {4, 6}, {4, 2} // Closing point
+        };
+        testing(fixer, pointsArray);
+
+        System.out.println("2. Example of a simple square without internal intersections.");
+        pointsArray = new int[][]{
                 {0, 0},
                 {10, 0},
                 {10, 10},
                 {0, 10},
-                {0, 0}
-        }; // Closing point
+                {0, 0} // Closing point
+        };
         testing(fixer, pointsArray);
 
-        System.out.println("Example of an Invalid figure (a square inside a square)");
+        System.out.println("3. Example of an Invalid figure (a square inside a square)");
         pointsArray = new int[][]{
                 {0, 0},  // Outer square
                 {10, 0},
@@ -38,7 +48,7 @@ public class Main {
         };
         testing(fixer, pointsArray);
 
-        System.out.println("Example of an invalid figure (repeated dots)");
+        System.out.println("4. Example of an invalid figure (repeated dots)");
         pointsArray = new int[][]{
                 {0, 0},
                 {10, 0},
@@ -50,7 +60,7 @@ public class Main {
         };
         testing(fixer, pointsArray);
 
-        System.out.println("Example of an invalid figure (intersecting edges)");
+        System.out.println("5. Example of an invalid figure (intersecting edges)");
         pointsArray = new int[][]{
                 {0, 0},
                 {10, 0},
@@ -60,7 +70,7 @@ public class Main {
         };
         testing(fixer, pointsArray);
 
-        System.out.println("Example of a valid figure (convex polygon)");
+        System.out.println("6. Example of a valid figure (convex polygon)");
         pointsArray = new int[][]{
                 {0, 0},
                 {5, 0},
@@ -83,6 +93,7 @@ public class Main {
         isValid = fixer.isValid(shape);
         System.out.println("Is Shape Valid: " + isValid);
         if (!isValid) {
+            //Shape2D newShape = fixer.repair(shape);
             Shape2D newShape = fixer.repair(shape);
             isValid = fixer.isValid(newShape);
             System.out.println("Is Shape Valid after repair: " + isValid);
