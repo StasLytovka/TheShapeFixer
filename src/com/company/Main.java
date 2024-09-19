@@ -14,6 +14,14 @@ public class Main {
         TheShapeFixer fixer = new TheShapeFixer();
         int[][] pointsArray = new int[][]{{0, 0}};
 
+        System.out.println("0. Example The point lies on the segment.");
+        pointsArray = new int[][]{
+                {0, 0}, {2, 0}, {4, 0},{4, 2}, {2, 2}, {2, 1},
+                {2, 4}, {0, 4}, {0, 0} // Closing point
+
+        };
+        testing(fixer, pointsArray);
+
         System.out.println("1. Example of a simple square without internal intersections.");
         pointsArray = new int[][]{
                 {0, 6}, {0, 0},
@@ -93,7 +101,6 @@ public class Main {
         isValid = fixer.isValid(shape);
         System.out.println("Is Shape Valid: " + isValid);
         if (!isValid) {
-            //Shape2D newShape = fixer.repair(shape);
             Shape2D newShape = fixer.repair(shape);
             isValid = fixer.isValid(newShape);
             System.out.println("Is Shape Valid after repair: " + isValid);

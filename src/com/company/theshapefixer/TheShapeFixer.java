@@ -38,8 +38,17 @@ public class TheShapeFixer {
         }
 
         // Check for internal edges or connection of two shapes
-        return !hasInternalEdges(points);
+        if (hasInternalEdges(points)) {
+            return false;
+        }
+
+        if (SegmentPassingThroughPoint.hasSegmentPassingThroughPoint(points)) {
+            return false;
+        }
+
+        return true;
     }
+
 
     /**
      * Method for checking line intersection
@@ -102,7 +111,15 @@ public class TheShapeFixer {
      */
     public Shape2D repair(Shape2D shape) {
         List<Shape2D> closedContours = findOpenContours(shape);
-        //List<Shape2D> closedContours = getShape2DS(shape);
+
+        for (int i = 0; i < closedContours.size(); i++) {
+            Shape2D contour = closedContours.get(i);
+            List<Point2D> points = contour.getPoints();
+            if (SegmentPassingThroughPoint.hasSegmentPassingThroughPoint(points)) {
+                List<Point2D> repairPoints = SegmentPassingThroughPoint.repairShape(points);
+                closedContours.set(i, new Shape2D(repairPoints));
+            }
+        }
 
         Shape2D mergeCommonLines;
         if (closedContours.size() > 1) {
@@ -130,9 +147,7 @@ public class TheShapeFixer {
         List<Point2D> points = shape.getPoints();  // Get the points from the shape
         List<Point2D> startAndEndPoints = findStartAndEndPoints(shape);  // Find duplicate points
         Set<Point2D> startAndEndPointSet = new HashSet<>(startAndEndPoints);  // Use a set for quick lookups
-
         List<Shape2D> contours = new ArrayList<>();
-        ;
         boolean[] visited = new boolean[points.size()];  // Track visited points to avoid reprocessing
 
         // Start processing the main outer contour
